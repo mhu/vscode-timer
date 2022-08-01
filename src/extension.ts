@@ -2,10 +2,10 @@ import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
     const disposable = vscode.commands.registerCommand('timer.create', () => {
-        showInput('Create a timer for how many minutes?').then((minutes: string | undefined) => {
+        showInput('Create a timer for how many minutes?', 'Minutes').then((minutes: string | undefined) => {
             if (minutes === undefined || minutes === '') return;
 
-            showInput('Timer message?').then((message: string | undefined) => {
+            showInput('Timer message?', 'Message').then((message: string | undefined) => {
                 if (message === undefined || message === '') {
                     message = 'Time is up!';
                 }
@@ -18,8 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 }
 
-function showInput(title: string): Thenable<string | undefined> {
-    return vscode.window.showInputBox({ title });
+function showInput(title: string, placeholder?: string): Thenable<string | undefined> {
+    return vscode.window.showInputBox({ title, placeHolder: placeholder });
 }
 
 function runTimer(minutes: number, message: string): void {
